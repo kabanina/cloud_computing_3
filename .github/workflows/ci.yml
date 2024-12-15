@@ -1,0 +1,52 @@
+name: Node.js CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Крок 1: Checkout репозиторія
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Крок 2: Встановлення Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      # Крок 3: Встановлення залежностей
+      - name: Install dependencies
+        run: npm install
+
+      # Крок 4: Запуск тестів
+      - name: Run tests
+        run: npm test
+
+  deploy:
+    runs-on: ubuntu-latest
+
+    needs: test
+
+    steps:
+      # Крок 1: Checkout репозиторія
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Крок 2: Встановлення Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      # Крок 3: Деплой (симуляція)
+      - name: Deploy simulation
+        run: echo "Deployed"
